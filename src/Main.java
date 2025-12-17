@@ -71,7 +71,7 @@ class Booking {
         }
     }
 
-    public void Info() {
+    public void info() {
         System.out.println("Booking ID: " + bookingId + ", Duration: " + nights +
                 " nights, Total Price: $" + totalPrice);
     }
