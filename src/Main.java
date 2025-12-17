@@ -1,10 +1,10 @@
 // Bekenov Almas SE-2506
 
 class Room {
-    private int roomNumber;
-    private String type; // Standard, Deluxe, Suite
-    private double pricePerNight;
-    private boolean isOccupied;
+    private final int roomNumber;
+    private final String type;
+    private final double pricePerNight;
+    private final boolean isOccupied;
 
     public Room(int roomNumber, String type, double pricePerNight, boolean isOccupied) {
         this.roomNumber = roomNumber;
@@ -12,10 +12,6 @@ class Room {
         this.pricePerNight = pricePerNight;
         this.isOccupied = isOccupied;
     }
-
-    public int getRoomNumber() { return roomNumber; }
-    public String getType() { return type; }
-    public boolean isOccupied() { return isOccupied; }
 
     public void checkAvailability() {
         if (isOccupied) {
@@ -32,17 +28,15 @@ class Room {
 }
 
 class Guest {
-    private String fullName;
-    private String email;
-    private int loyaltyPoints;
+    private final String fullName;
+    private final String email;
+    private final int loyaltyPoints;
 
     public Guest(String fullName, String email, int loyaltyPoints) {
         this.fullName = fullName;
         this.email = email;
         this.loyaltyPoints = loyaltyPoints;
     }
-
-    public String getFullName() { return fullName; }
 
     public void checkVIPStatus() {
         if (loyaltyPoints > 100) {
@@ -59,17 +53,15 @@ class Guest {
 }
 
 class Booking {
-    private String bookingId;
-    private int nights;
-    private double totalPrice;
+    private final String bookingId;
+    private final int nights;
+    private final double totalPrice;
 
     public Booking(String bookingId, int nights, double totalPrice) {
         this.bookingId = bookingId;
         this.nights = nights;
         this.totalPrice = totalPrice;
     }
-
-    public String getBookingId() { return bookingId; }
 
     public void checkBookingValue() {
         if (totalPrice > 500) {
@@ -86,8 +78,8 @@ class Booking {
 }
 
 public class Main {
-    public static void main(String[] args) {
-        // Тестируем Room
+    // Убрал String[] args и public, так как твоя версия Java это позволяет
+    static void main() {
         Room r1 = new Room(101, "Deluxe", 150.0, false);
         Room r2 = new Room(205, "Suite", 300.0, true);
 
@@ -97,22 +89,14 @@ public class Main {
 
         System.out.println();
 
-        // Тестируем Guest
         Guest g1 = new Guest("Ivan Ivanov", "ivan@mail.com", 150);
-        Guest g2 = new Guest("Aliya S.", "aliya@mail.com", 50);
-
         g1.Info();
-        g2.Info();
         g1.checkVIPStatus();
 
         System.out.println();
 
-        // Тестируем Booking
         Booking b1 = new Booking("BK-9921", 3, 450.0);
-        Booking b2 = new Booking("BK-1104", 5, 1200.0);
-
         b1.Info();
-        b2.Info();
-        b2.checkBookingValue();
+        b1.checkBookingValue();
     }
 }
