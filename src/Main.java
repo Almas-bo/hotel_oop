@@ -78,25 +78,25 @@ class Booking {
 }
 
 public class Main {
-    // Убрал String[] args и public, так как твоя версия Java это позволяет
-    static void main() {
+    public static void main(String[] args) {
+
         Room r1 = new Room(101, "Deluxe", 150.0, false);
         Room r2 = new Room(205, "Suite", 300.0, true);
 
-        r1.Info();
-        r2.Info();
+        r1.info();
+        r2.info();
         r1.checkAvailability();
 
         System.out.println();
 
-        Guest g1 = new Guest("Ivan Ivanov", "ivan@mail.com", 150);
-        g1.Info();
+        Guest g1 = new Guest("Almas Bekenov", "almasbekenov@gmail.com", 150);
+        g1.info();
         g1.checkVIPStatus();
 
         System.out.println();
 
         Booking b1 = new Booking("BK-9921", 3, 450.0);
-        b1.Info();
+        b1.info();
         b1.checkBookingValue();
     }
 }
