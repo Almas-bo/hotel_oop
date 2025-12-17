@@ -21,7 +21,7 @@ class Room {
         }
     }
 
-    public void Info() {
+    public void info() {
         System.out.println("Room: #" + roomNumber + ", Type: " + type +
                 ", Price: $" + pricePerNight + ", Occupied: " + isOccupied);
     }
@@ -46,7 +46,7 @@ class Guest {
         }
     }
 
-    public void Info() {
+    public void info() {
         System.out.println("Guest: " + fullName + ", Email: " + email +
                 ", Loyalty Points: " + loyaltyPoints);
     }
