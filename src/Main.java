@@ -12,7 +12,7 @@ class Room {
     void show() {
         System.out.println("Room " + number + " type: " + type);
         if (occupied) {
-            System.out.println("Status: occupied");
+            System.out.println("Status: occpied");
         } else {
             System.out.println("Status: free");
         }
