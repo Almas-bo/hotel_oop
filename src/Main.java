@@ -1,102 +1,72 @@
-// Bekenov Almas SE-2506
-
 class Room {
-    private final int roomNumber;
-    private final String type;
-    private final double pricePerNight;
-    private final boolean isOccupied;
+    int number;
+    String type;
+    boolean occupied;
 
-    public Room(int roomNumber, String type, double pricePerNight, boolean isOccupied) {
-        this.roomNumber = roomNumber;
-        this.type = type;
-        this.pricePerNight = pricePerNight;
-        this.isOccupied = isOccupied;
+    Room(int n, String t, boolean o) {
+        number = n;
+        type = t;
+        occupied = o;
     }
 
-    public void checkAvailability() {
-        if (isOccupied) {
-            System.out.println("Room " + roomNumber + " is currently occupied.");
+    void show() {
+        System.out.println("Room " + number + " type: " + type);
+        if (occupied) {
+            System.out.println("Status: occupied");
         } else {
-            System.out.println("Room " + roomNumber + " is available for booking.");
+            System.out.println("Status: free");
         }
-    }
-
-    public void info() {
-        System.out.println("Room: #" + roomNumber + ", Type: " + type +
-                ", Price: $" + pricePerNight + ", Occupied: " + isOccupied);
     }
 }
 
 class Guest {
-    private final String fullName;
-    private final String email;
-    private final int loyaltyPoints;
+    String name;
+    int points;
 
-    public Guest(String fullName, String email, int loyaltyPoints) {
-        this.fullName = fullName;
-        this.email = email;
-        this.loyaltyPoints = loyaltyPoints;
+    Guest(String n, int p) {
+        name = n;
+        points = p;
     }
 
-    public void checkVIPStatus() {
-        if (loyaltyPoints > 100) {
-            System.out.println(fullName + " is a VIP Guest!");
+    void show() {
+        System.out.println("Guest: " + name);
+        if (points > 100) {
+            System.out.println("VIP guest");
         } else {
-            System.out.println(fullName + " is a Regular Guest.");
+            System.out.println("Normal guest");
         }
-    }
-
-    public void info() {
-        System.out.println("Guest: " + fullName + ", Email: " + email +
-                ", Loyalty Points: " + loyaltyPoints);
     }
 }
 
 class Booking {
-    private final String bookingId;
-    private final int nights;
-    private final double totalPrice;
+    String id;
+    int nights;
 
-    public Booking(String bookingId, int nights, double totalPrice) {
-        this.bookingId = bookingId;
-        this.nights = nights;
-        this.totalPrice = totalPrice;
+    Booking(String i, int n) {
+        id = i;
+        nights = n;
     }
 
-    public void checkBookingValue() {
-        if (totalPrice > 500) {
-            System.out.println("Booking " + bookingId + " is a High-Value reservation.");
-        } else {
-            System.out.println("Booking " + bookingId + " is a standard reservation.");
-        }
-    }
-
-    public void info() {
-        System.out.println("Booking ID: " + bookingId + ", Duration: " + nights +
-                " nights, Total Price: $" + totalPrice);
+    void show() {
+        System.out.println("Booking id: " + id);
+        System.out.println("Nights: " + nights);
     }
 }
 
 public class Main {
     public static void main(String[] args) {
 
-        Room r1 = new Room(101, "Deluxe", 150.0, false);
-        Room r2 = new Room(205, "Suite", 300.0, true);
-
-        r1.info();
-        r2.info();
-        r1.checkAvailability();
+        Room r = new Room(101, "Deluxe", false);
+        r.show();
 
         System.out.println();
 
-        Guest g1 = new Guest("Almas Bekenov", "almasbekenov@gmail.com", 150);
-        g1.info();
-        g1.checkVIPStatus();
+        Guest g = new Guest("Almas", 120);
+        g.show();
 
         System.out.println();
 
-        Booking b1 = new Booking("BK-9921", 3, 450.0);
-        b1.info();
-        b1.checkBookingValue();
+        Booking b = new Booking("B1", 3);
+        b.show();
     }
 }
