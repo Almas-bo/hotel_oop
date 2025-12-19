@@ -53,8 +53,8 @@ class Booking {
     }
 }
 
-public class Main {
-    public static void main(String[] args) {
+class Main {
+     static void main(String[] args) {
 
         Room r = new Room(101, "Deluxe", false);
         r.show();
