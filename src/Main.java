@@ -1,6 +1,6 @@
 
 
-cl Guest {
+class Guest {
     String name;
     int points;
 
