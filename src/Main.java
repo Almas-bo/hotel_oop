@@ -2,14 +2,14 @@ class Main {
    public static void main(String[] args) {
       Hotel hotel = new Hotel("Мой отель");
 
-      // Добавляем комнаты
+      // + комнаты
       hotel.addRoom(new Room(101, "Стандарт", false, 100));
       hotel.addRoom(new Room(102, "Люкс", false, 200));
       hotel.addRoom(new Room(103, "Стандарт", true, 100));
       hotel.addRoom(new Room(104, "Люкс", false, 200));
       hotel.addRoom(new Room(105, "Сюит", false, 300));
 
-      // Добавляем гостей
+      // + гости
       Guest g1 = new Guest("Алмас", 150, "almas@email.com");
       Guest g2 = new Guest("Айда", 75, "aida@email.com");
       Guest g3 = new Guest("Бахыт", 200, "bakyt@email.com");
@@ -18,12 +18,12 @@ class Main {
       hotel.addGuest(g2);
       hotel.addGuest(g3);
 
-      // Добавляем бронирования
+      // + бронирования
       hotel.addBooking(new Booking("B001", g1, new Room(101, "Стандарт", false, 100), 3));
       hotel.addBooking(new Booking("B002", g2, new Room(102, "Люкс", false, 200), 2));
       hotel.addBooking(new Booking("B003", g3, new Room(105, "Сюит", false, 300), 5));
 
-      // Показываем данные
+      // данные
       hotel.showAllRooms();
       hotel.showAllGuests();
       hotel.showAllBookings();
