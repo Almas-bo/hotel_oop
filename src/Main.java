@@ -1,4 +1,4 @@
-    class Room {
+class Room {
     int number;
     String type;
     boolean occupied;
