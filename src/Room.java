@@ -1,4 +1,4 @@
-class Room {
+class Room extends HotelEntity {
     private int number;
     private String type;
     private boolean occupied;
@@ -9,6 +9,7 @@ class Room {
         this.type = type;
         this.occupied = occupied;
         this.price = price;
+        this.id = "ROOM_" + number;
     }
 
     public int getNumber() {
@@ -32,6 +33,11 @@ class Room {
     }
 
     @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
     public String toString() {
         return "Room #" + number + " (" + type + ") - $" + price;
     }
@@ -46,10 +52,11 @@ class Room {
 
     @Override
     public int hashCode() {
-        return number;
+        return number * 31;
     }
 
-    public void show() {
+    @Override
+    public void display() {
         System.out.println("Номер: " + number + " | Тип: " + type +
                 " | Статус: " + (occupied ? "ЗАНЯТА" : "СВОБОДНА") + " | Цена: $" + price);
     }

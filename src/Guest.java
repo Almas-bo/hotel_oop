@@ -1,4 +1,4 @@
-class Guest {
+class Guest extends HotelEntity {
     private String name;
     private int points;
     private String email;
@@ -7,6 +7,7 @@ class Guest {
         this.name = name;
         this.points = points;
         this.email = email;
+        this.id = "GUEST_" + email;
     }
 
     public String getName() {
@@ -30,6 +31,11 @@ class Guest {
     }
 
     @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
     public String toString() {
         return name + " (" + email + ") - Баллы: " + points;
     }
@@ -44,10 +50,15 @@ class Guest {
 
     @Override
     public int hashCode() {
-        return email.hashCode();
+        int result = 0;
+        for (char c : email.toCharArray()) {
+            result = result * 31 + c;
+        }
+        return result;
     }
 
-    public void show() {
+    @Override
+    public void display() {
         System.out.println("Гость: " + name + " | Email: " + email +
                 " | Баллы: " + points + " | Статус: " + getStatus());
     }

@@ -32,7 +32,6 @@ class Hotel {
         }
     }
 
-    // ФИЛЬТРАЦИЯ - свободные комнаты
     public Room[] getFreeRooms() {
         Room[] free = new Room[roomCount];
         int count = 0;
@@ -46,7 +45,6 @@ class Hotel {
         return result;
     }
 
-    // ФИЛЬТРАЦИЯ - по типу
     public Room[] getRoomsByType(String type) {
         Room[] temp = new Room[roomCount];
         int count = 0;
@@ -60,7 +58,19 @@ class Hotel {
         return result;
     }
 
-    // ПОИСК гостя
+    public Guest[] getVIPGuests() {
+        Guest[] temp = new Guest[guestCount];
+        int count = 0;
+        for (int i = 0; i < guestCount; i++) {
+            if (guests[i].getPoints() > 100) {
+                temp[count++] = guests[i];
+            }
+        }
+        Guest[] result = new Guest[count];
+        System.arraycopy(temp, 0, result, 0, count);
+        return result;
+    }
+
     public Guest findGuest(String name) {
         for (int i = 0; i < guestCount; i++) {
             if (guests[i].getName().equals(name)) {
@@ -70,17 +80,15 @@ class Hotel {
         return null;
     }
 
-    // ПОИСК бронирования
     public Booking findBooking(String id) {
         for (int i = 0; i < bookingCount; i++) {
-            if (bookings[i].getId().equals(id)) {
+            if (bookings[i].getBookingId().equals(id)) {
                 return bookings[i];
             }
         }
         return null;
     }
 
-    // СОРТИРОВКА комнат по цене
     public Room[] sortRoomsByPrice() {
         Room[] sorted = new Room[roomCount];
         System.arraycopy(rooms, 0, sorted, 0, roomCount);
@@ -97,7 +105,6 @@ class Hotel {
         return sorted;
     }
 
-    // СОРТИРОВКА гостей по баллам
     public Guest[] sortGuestsByPoints() {
         Guest[] sorted = new Guest[guestCount];
         System.arraycopy(guests, 0, sorted, 0, guestCount);
@@ -114,24 +121,40 @@ class Hotel {
         return sorted;
     }
 
+    public Booking[] sortBookingsByPrice() {
+        Booking[] sorted = new Booking[bookingCount];
+        System.arraycopy(bookings, 0, sorted, 0, bookingCount);
+
+        for (int i = 0; i < bookingCount; i++) {
+            for (int j = i + 1; j < bookingCount; j++) {
+                if (sorted[i].getTotalPrice() > sorted[j].getTotalPrice()) {
+                    Booking temp = sorted[i];
+                    sorted[i] = sorted[j];
+                    sorted[j] = temp;
+                }
+            }
+        }
+        return sorted;
+    }
+
     public void showAllRooms() {
         System.out.println("\n==== ВСЕ КОМНАТЫ ====");
         for (int i = 0; i < roomCount; i++) {
-            rooms[i].show();
+            rooms[i].display();
         }
     }
 
     public void showAllGuests() {
         System.out.println("\n==== ВСЕ ГОСТИ ====");
         for (int i = 0; i < guestCount; i++) {
-            guests[i].show();
+            guests[i].display();
         }
     }
 
     public void showAllBookings() {
         System.out.println("\n==== ВСЕ БРОНИРОВАНИЯ ====");
         for (int i = 0; i < bookingCount; i++) {
-            bookings[i].show();
+            bookings[i].display();
         }
     }
 
@@ -142,7 +165,19 @@ class Hotel {
             System.out.println("Нет свободных комнат");
         } else {
             for (Room room : free) {
-                room.show();
+                room.display();
+            }
+        }
+    }
+
+    public void showVIPGuests() {
+        System.out.println("\n==== VIP ГОСТИ ====");
+        Guest[] vip = getVIPGuests();
+        if (vip.length == 0) {
+            System.out.println("Нет VIP гостей");
+        } else {
+            for (Guest guest : vip) {
+                guest.display();
             }
         }
     }
@@ -151,17 +186,23 @@ class Hotel {
         System.out.println("\n==== КОМНАТЫ ПО ЦЕНЕ ====");
         Room[] sorted = sortRoomsByPrice();
         for (int i = 0; i < roomCount; i++) {
-            sorted[i].show();
+            sorted[i].display();
         }
     }
 
     public void showGuestsSorted() {
-        System.out.println("\n==== ГОСТИ ПО БАЛЛАМ ====");
+        System.out.println("\n==== ГОСТИ ПО БАЛЛАМ (VIP первыми) ====");
         Guest[] sorted = sortGuestsByPoints();
         for (int i = 0; i < guestCount; i++) {
-            sorted[i].show();
+            sorted[i].display();
+        }
+    }
+
+    public void showBookingsSorted() {
+        System.out.println("\n==== БРОНИРОВАНИЯ ПО СУММЕ ====");
+        Booking[] sorted = sortBookingsByPrice();
+        for (int i = 0; i < bookingCount; i++) {
+            sorted[i].display();
         }
     }
 }
-
-// ГЛАВНАЯ ПРОГРАММА
