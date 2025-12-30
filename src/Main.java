@@ -1,6 +1,25 @@
+class Room {
+    int number;
+    String type;
+    boolean occupied;
 
+    Room(int n, String t, boolean o) {
+        number = n;
+        type = t;
+        occupied = o;
+    }
 
-    class Guest {
+    void show() {
+        System.out.println("Room " + number + " type: " + type);
+        if (occupied) {
+            System.out.println("Status: occupied");
+        } else {
+            System.out.println("Status: free");
+        }
+    }
+}
+
+class Guest {
     String name;
     int points;
 
@@ -34,10 +53,10 @@ class Booking {
     }
 }
 
-class Main {
+ class Main {
      static void main(String[] args) {
 
-        room r = new room(101, "Deluxe", false);
+        Room r = new Room(101, "Deluxe", false);
         r.show();
 
         System.out.println();
