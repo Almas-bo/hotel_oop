@@ -59,9 +59,8 @@ class Main {
 
       while (true){
          System.out.println("1. Register");
-         System.out.println("2. show all rooms list");
-         System.out.println("3. change user info");
-         System.out.println("4. exit");
+         System.out.println("2. show all rooms list");;
+         System.out.println("3. exit");
 
          int command = scanner.nextInt();
 
@@ -90,6 +89,9 @@ class Main {
                preparedStatement.setInt(2, points);
                preparedStatement.setString(3, email);
                int update = preparedStatement.executeUpdate();
+               ResultSet resultSet = preparedStatement.executeQuery();
+               int userId = resultSet.getInt("id");
+               System.out.println("Registration successful! Your ID is: " + userId);
             }
 
          }
@@ -106,6 +108,19 @@ class Main {
                           + " " + result.getInt("price"));
             }
 
+         }
+//         if (command == 3){
+//            System.out.println("what you want to change?\n 1.name \n 2.email");
+//            int change = scanner.nextInt();
+//            scanner.nextLine();
+//            if(change==1){
+//               Statement statement = connection.createStatement();
+//               String sql_name = "";
+//            }
+//         }
+         if (command==3){
+            System.out.println("Exiting...");
+            break;
          }
       }
 
