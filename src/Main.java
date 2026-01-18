@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 
 
 class Main {
@@ -16,10 +17,11 @@ class Main {
 
    public static void main(String[] args) throws SQLException{
       boolean cycle = true;
+      boolean answer = true;
+
       Scanner scanner = new Scanner(System.in);
 
       while (cycle==true){
-         boolean answer = true;
          System.out.println("Have you been registered before? (yes/no)");
          String regis = scanner.nextLine(); //это уже сам ответ, да или нет
 
@@ -38,11 +40,14 @@ class Main {
       }
 
 
+      Connection connection = null;
+
+
 
       try {
          Class.forName("org.postgresql.Driver");
 
-         Connection connection = DriverManager.getConnection(db_url, db_user, db_password);
+         connection = DriverManager.getConnection(db_url, db_user, db_password);
 
       } catch (ClassNotFoundException e) {
          System.out.println("Ошибка: драйвер не найден.");
@@ -53,10 +58,10 @@ class Main {
       }
 
       while (true){
-         System.out.println("1. Зарегестрироваться");
-         System.out.println("2. Показать список номеров");
-         System.out.println("3. Изменить данные пользователя");
-         System.out.println("4. Выйти");
+         System.out.println("1. Register");
+         System.out.println("2. show all rooms list");
+         System.out.println("3. change user info");
+         System.out.println("4. exit");
 
          int command = scanner.nextInt();
 
@@ -67,14 +72,16 @@ class Main {
             else if(answer == false){
                System.out.println("enter your name: ");
                String name = scanner.nextLine();
+               scanner.nextLine();
 
                System.out.println("enter your guest points: ");
-               int points = scanner.nextLine();
+               int points = scanner.nextInt();
+               scanner.nextLine();
 
                System.out.println("enter your email: ");
                String email = scanner.nextLine();
 
-
+               answer = true
 
                Statement statement = connection.createStatement(); // Это чтобы уже с бд связываться
                String sql_tasks = "insert into guest (name,points,email) values (?, ?, ?);";
@@ -87,6 +94,9 @@ class Main {
 
          }
 
+         if (command == 2){
+            String sql_select = "select * from room order by room_id asc";
+         }
       }
 
 
