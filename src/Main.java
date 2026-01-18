@@ -1,7 +1,22 @@
-class Main {
-   public static void main(String[] args) {
-      Hotel hotel = new Hotel("Grand Hotel");
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.rmi.ConnectException;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
+class Main {
+
+
+   private static final String db_user = "almas";
+   private static final String db_password = "0000";
+   private static final String db_url = "jdbc:postgresql://localhost:5432/hotel_reservation_system";
+
+   public static void main(String[] args) throws Exception{
+
+      Connection connection = DriverManager.getConnection(db_user ,db_url,db_password);
+
+      Hotel hotel = new Hotel("Grand Hotel");
       // +комнаты
       hotel.addRoom(new Room(101, "Стандарт", false, 100));
       hotel.addRoom(new Room(102, "Люкс", false, 200));
@@ -49,14 +64,14 @@ class Main {
          System.out.println("Найдено: " + foundBooking);
       }
 
-      System.out.println("\n==== EQUALS И HASHCODE ====");
-      Guest g4 = new Guest("Новый", 100, "almas@email.com");
-      System.out.println("g1 и g4 - один человек? " + g1.equals(g4));
-      System.out.println("g1.hashCode() == g4.hashCode(): " + (g1.hashCode() == g4.hashCode()));
+      //System.out.println("\n==== EQUALS И HASHCODE ====");
+      //Guest g4 = new Guest("Новый", 100, "almas@email.com");
+      //System.out.println("g1 и g4 - один человек? " + g1.equals(g4));
+      //System.out.println("g1.hashCode() == g4.hashCode(): " + (g1.hashCode() == g4.hashCode()));
 
-      Room r1 = new Room(101, "Стандарт", false, 100);
-      Room r2 = new Room(101, "Люкс", true, 150);
-      System.out.println("r1 и r2 - одна комната? " + r1.equals(r2));
-      System.out.println("r1.hashCode() == r2.hashCode(): " + (r1.hashCode() == r2.hashCode()));
+      //Room r1 = new Room(101, "Стандарт", false, 100);
+      //Room r2 = new Room(101, "Люкс", true, 150);
+      //System.out.println("r1 и r2 - одна комната? " + r1.equals(r2));
+      //System.out.println("r1.hashCode() == r2.hashCode(): " + (r1.hashCode() == r2.hashCode()));
    }
 }
