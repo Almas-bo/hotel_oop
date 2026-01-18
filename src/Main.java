@@ -81,7 +81,7 @@ class Main {
                System.out.println("enter your email: ");
                String email = scanner.nextLine();
 
-               answer = true
+               answer = true;
 
                Statement statement = connection.createStatement(); // Это чтобы уже с бд связываться
                String sql_tasks = "insert into guest (name,points,email) values (?, ?, ?);";
@@ -95,7 +95,17 @@ class Main {
          }
 
          if (command == 2){
+            Statement statement = connection.createStatement();
             String sql_select = "select * from room order by room_id asc";
+            ResultSet result = statement.executeQuery(sql_select);
+
+            while (result.next()){
+               System.out.println(result.getInt("room_number")
+                          + " " + result.getString("room_type")
+                          + " " + result.getBoolean("is_booked")
+                          + " " + result.getInt("price"));
+            }
+
          }
       }
 
