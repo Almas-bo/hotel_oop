@@ -1,7 +1,9 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
+import java.sql.ResultSet;
 
 
 class Main {
@@ -13,23 +15,30 @@ class Main {
 
 
    public static void main(String[] args) throws SQLException{
-      Scanner scanner_reg = new Scanner(System.in); // это для того чтобы чекнуть чел зарегался или нет
+      boolean cycle = true;
+      Scanner scanner = new Scanner(System.in);
 
-      boolean answer = true;
-      System.out.println("Have you been registered before? (yes/no)");
-      String ответ = scanner_reg.nextLine();
-      if (scanner_reg == "yes"){
+      while (cycle==true){
          boolean answer = true;
+         System.out.println("Have you been registered before? (yes/no)");
+         String regis = scanner.nextLine(); //это уже сам ответ, да или нет
+
+
+         if (regis.equalsIgnoreCase("yes")){
+             answer = true;
+             cycle = false;
+         }
+         else if (regis.equalsIgnoreCase("no")){
+             answer = false;
+             cycle = false;
+         }
+         else {
+            System.out.println("wrong response, try again");
+         }
       }
-      else if (scanner_reg == "no"){
-         boolean answer = false;
-      }
 
 
 
-
-
-      Scanner scanner_menu = new Scanner(System.in);
       try {
          Class.forName("org.postgresql.Driver");
 
@@ -37,10 +46,10 @@ class Main {
 
       } catch (ClassNotFoundException e) {
          System.out.println("Ошибка: драйвер не найден.");
-         e.printStackTrace(); // Печать стека ошибки
+         e.printStackTrace();
       } catch (SQLException e) {
          System.out.println("Ошибка подключения к базе данных.");
-         e.printStackTrace(); // Печать стека ошибки
+         e.printStackTrace();
       }
 
       while (true){
@@ -48,10 +57,39 @@ class Main {
          System.out.println("2. Показать список номеров");
          System.out.println("3. Изменить данные пользователя");
          System.out.println("4. Выйти");
-      }
-      int command = scanner_menu.nextInt()
 
-      if (command == 1 and )
+         int command = scanner.nextInt();
+
+         if (command == 1 ){
+            if (answer == true){
+               System.out.println("you are already registered!");
+            }
+            else if(answer == false){
+               System.out.println("enter your name: ");
+               String name = scanner.nextLine();
+
+               System.out.println("enter your guest points: ");
+               int points = scanner.nextLine();
+
+               System.out.println("enter your email: ");
+               String email = scanner.nextLine();
+
+
+
+               Statement statement = connection.createStatement(); // Это чтобы уже с бд связываться
+               String sql_tasks = "insert into guest (name,points,email) values (?, ?, ?);";
+               PreparedStatement preparedStatement = connection.prepareStatement(sql_tasks);
+               preparedStatement.setString(1, name);
+               preparedStatement.setInt(2, points);
+               preparedStatement.setString(3, email);
+               int update = preparedStatement.executeUpdate();
+            }
+
+         }
+
+      }
+
+
 //      Hotel hotel = new Hotel("Grand Hotel");
 //      // +комнаты
 //      hotel.addRoom(new Room(101, "Стандарт", false, 100));
