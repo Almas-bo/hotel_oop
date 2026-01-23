@@ -60,7 +60,8 @@ class Main {
       while (true){
          System.out.println("1. Register");
          System.out.println("2. show all rooms list");;
-         System.out.println("3. exit");
+         System.out.println("3. Change user's info");
+         System.out.println("4. Exit");
 
          int command = scanner.nextInt();
 
@@ -83,15 +84,33 @@ class Main {
                answer = true;
 
                Statement statement = connection.createStatement(); // Это чтобы уже с бд связываться
-               String sql_tasks = "insert into guest (name,points,email) values (?, ?, ?);";
-               PreparedStatement preparedStatement = connection.prepareStatement(sql_tasks);
-               preparedStatement.setString(1, name);
-               preparedStatement.setInt(2, points);
-               preparedStatement.setString(3, email);
-               int update = preparedStatement.executeUpdate();
-               ResultSet resultSet = preparedStatement.executeQuery();
-               int userId = resultSet.getInt("id");
-               System.out.println("Registration successful! Your ID is: " + userId);
+               String sql_tasks = "INSERT INTO guest (name, points, email) VALUES (?, ?, ?)";
+               try (PreparedStatement preparedStatement = connection.prepareStatement(sql_tasks, Statement.RETURN_GENERATED_KEYS)) {
+                  preparedStatement.setString(1, name);
+                  preparedStatement.setInt(2, points);
+                  preparedStatement.setString(3, email);
+
+                  int update = preparedStatement.executeUpdate();
+
+
+                  ResultSet resultSet = preparedStatement.getGeneratedKeys();
+                  if (resultSet.next()) {
+                     int userId = resultSet.getInt(1);
+                     System.out.println("Registration successful! Your ID is: " + userId);
+                  }
+               } catch (SQLException e) {
+                  e.printStackTrace();
+               }
+
+//               String sql_tasks = "insert into guest (name,points,email) values (?, ?, ?);";
+//               PreparedStatement preparedStatement = connection.prepareStatement(sql_tasks);
+//               preparedStatement.setString(1, name);
+//               preparedStatement.setInt(2, points);
+//               preparedStatement.setString(3, email);
+//               int update = preparedStatement.executeUpdate();
+//               ResultSet resultSet = preparedStatement.executeQuery();
+//               int userId = resultSet.getInt("id");
+//               System.out.println("Registration successful! Your ID is: " + userId);
             }
 
          }
@@ -109,16 +128,61 @@ class Main {
             }
 
          }
-//         if (command == 3){
-//            System.out.println("what you want to change?\n 1.name \n 2.email");
-//            int change = scanner.nextInt();
-//            scanner.nextLine();
-//            if(change==1){
-//               Statement statement = connection.createStatement();
-//               String sql_name = "";
-//            }
-//         }
-         if (command==3){
+         if (command == 3) {
+            System.out.println("Enter your ID: ");
+            int userId = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("What do you want to change?\n1. Name \n2. Email");
+            int change = scanner.nextInt();
+            scanner.nextLine();
+
+            if (change == 1) {
+               System.out.println("Enter your new name: ");
+               String newName = scanner.nextLine();
+
+               String sql_name = "UPDATE guest SET name = ? WHERE id = ?";
+
+               try (PreparedStatement preparedStatement = connection.prepareStatement(sql_name)) {
+                  preparedStatement.setString(1, newName);
+                  preparedStatement.setInt(2, userId);
+
+                  int updateCount = preparedStatement.executeUpdate();
+                  if (updateCount > 0) {
+                     System.out.println("Name updated successfully!");
+                  } else {
+                     System.out.println("No user found with the given ID.");
+                  }
+               } catch (SQLException e) {
+                  e.printStackTrace();
+               }
+            }
+            else if (change == 2) {
+               System.out.println("Enter your new email: ");
+               String newEmail = scanner.nextLine();
+
+               String sql_email = "UPDATE guest SET email = ? WHERE guest_id = ?";
+
+               try (PreparedStatement preparedStatement = connection.prepareStatement(sql_email)) {
+                  preparedStatement.setString(1, newEmail);
+                  preparedStatement.setInt(2, userId);
+
+                  int updateCount = preparedStatement.executeUpdate();
+                  if (updateCount > 0) {
+                     System.out.println("Email updated successfully!");
+                  } else {
+                     System.out.println("No user found with the given ID.");
+                  }
+               } catch (SQLException e) {
+                  e.printStackTrace();
+               }
+            }
+            else {
+               System.out.println("wrong option.");
+            }
+         }
+
+         if (command==4){
             System.out.println("Exiting...");
             break;
          }
