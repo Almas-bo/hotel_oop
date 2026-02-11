@@ -61,7 +61,10 @@ class Main {
          System.out.println("1. Register");
          System.out.println("2. show all rooms list");;
          System.out.println("3. Change user's info");
-         System.out.println("4. Exit");
+         System.out.println("4. Delete user");
+         System.out.println("5. Add room");
+         System.out.println("6. Delete room");
+         System.out.println("7. Exit");
 
          int command = scanner.nextInt();
 
@@ -118,13 +121,15 @@ class Main {
 
          if (command == 2){
             Statement statement = connection.createStatement();
-            String sql_select = "select * from room order by room_id asc";
+            String sql_select = "select * from room order by room_number asc";
             ResultSet result = statement.executeQuery(sql_select);
 
             while (result.next()){
+               boolean isBooked = result.getBoolean("is_booked");
+               String status = isBooked ? "occupied" : "free";
                System.out.println(result.getInt("room_number")
                           + " " + result.getString("room_type")
-                          + " " + result.getBoolean("is_booked")
+                          + " " + status
                           + " " + result.getInt("price"));
             }
 
@@ -162,7 +167,7 @@ class Main {
                System.out.println("Enter your new email: ");
                String newEmail = scanner.nextLine();
 
-               String sql_email = "UPDATE guest SET email = ? WHERE guest_id = ?";
+               String sql_email = "UPDATE guest SET email = ? WHERE id = ?";
 
                try (PreparedStatement preparedStatement = connection.prepareStatement(sql_email)) {
                   preparedStatement.setString(1, newEmail);
@@ -183,7 +188,76 @@ class Main {
             }
          }
 
-         if (command==4){
+         if (command == 4) {
+            System.out.println("Enter user ID to delete: ");
+            int userId = scanner.nextInt();
+            scanner.nextLine();
+
+            String sql_delete = "DELETE FROM guest WHERE id = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql_delete)) {
+               preparedStatement.setInt(1, userId);
+
+               int updateCount = preparedStatement.executeUpdate();
+               if (updateCount > 0) {
+                  System.out.println("User deleted successfully!");
+               } else {
+                  System.out.println("No user found with the given ID.");
+               }
+            } catch (SQLException e) {
+               e.printStackTrace();
+            }
+         }
+
+         if (command == 5) {
+            System.out.println("Enter room number: ");
+            int roomNumber = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("Enter room type: ");
+            String roomType = scanner.nextLine();
+
+            System.out.println("Enter price: ");
+            int price = scanner.nextInt();
+            scanner.nextLine();
+
+            String sql_add_room = "INSERT INTO room (room_number, room_type, is_booked, price) VALUES (?, ?, ?, ?)";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql_add_room)) {
+               preparedStatement.setInt(1, roomNumber);
+               preparedStatement.setString(2, roomType);
+               preparedStatement.setBoolean(3, false);
+               preparedStatement.setInt(4, price);
+
+               preparedStatement.executeUpdate();
+               System.out.println("Room added successfully!");
+            } catch (SQLException e) {
+               e.printStackTrace();
+            }
+         }
+
+         if (command == 6) {
+            System.out.println("Enter room number to delete: ");
+            int roomNumber = scanner.nextInt();
+            scanner.nextLine();
+
+            String sql_delete_room = "DELETE FROM room WHERE room_number = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql_delete_room)) {
+               preparedStatement.setInt(1, roomNumber);
+
+               int updateCount = preparedStatement.executeUpdate();
+               if (updateCount > 0) {
+                  System.out.println("Room deleted successfully!");
+               } else {
+                  System.out.println("No room found with the given number.");
+               }
+            } catch (SQLException e) {
+               e.printStackTrace();
+            }
+         }
+
+         if (command == 7) {
             System.out.println("Exiting...");
             break;
          }
