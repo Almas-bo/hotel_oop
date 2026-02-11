@@ -64,7 +64,8 @@ class Main {
          System.out.println("4. Delete user");
          System.out.println("5. Add room");
          System.out.println("6. Delete room");
-         System.out.println("7. Exit");
+         System.out.println("7. Open website (link)");
+         System.out.println("8. Exit");
 
          int command = scanner.nextInt();
 
@@ -258,6 +259,12 @@ class Main {
          }
 
          if (command == 7) {
+            System.out.println("Website link: http://localhost:8080");
+            System.out.println("IMPORTANT: To make the website work, you must start the backend.");
+            System.out.println("You can do this by running the 'hotel-api' Spring Boot application.");
+         }
+
+         if (command == 8) {
             System.out.println("Exiting...");
             break;
          }
