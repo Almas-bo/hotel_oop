@@ -1,21 +1,24 @@
-import javax.persistence.Entity;
-import javax.persistence.Id;
+public class Room extends HotelEntity {
+    private String roomId;
+    private String roomType;
+    private double pricePerNight;
+    private String status;
 
-@Entity
-public class Room extends HotelEntity {  // Наследуем от HotelEntity
-    @Id
-    private Long roomId;  // Уникальный идентификатор комнаты
-    private String roomType;  // Тип комнаты (например, одноместная, двухместная)
-    private double pricePerNight;  // Цена за ночь
-    private String status;  // Статус комнаты: свободна или занята
+    public Room(String roomId, String roomType, double pricePerNight, String status) {
+        this.roomId = roomId;
+        this.id = roomId;
+        this.roomType = roomType;
+        this.pricePerNight = pricePerNight;
+        this.status = status;
+    }
 
-    // Геттеры и сеттеры для всех полей
-    public Long getRoomId() {
+    public String getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(Long roomId) {
+    public void setRoomId(String roomId) {
         this.roomId = roomId;
+        this.id = roomId;
     }
 
     public String getRoomType() {
@@ -40,5 +43,23 @@ public class Room extends HotelEntity {  // Наследуем от HotelEntity
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public boolean isOccupied() {
+        return "занята".equalsIgnoreCase(status);
+    }
+
+    public String getType() {
+        return roomType;
+    }
+
+    public double getPrice() {
+        return pricePerNight;
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Комната: " + roomId + " | Тип: " + roomType +
+                " | Цена: " + pricePerNight + " | Статус: " + status);
     }
 }

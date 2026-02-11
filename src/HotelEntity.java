@@ -1,15 +1,13 @@
-import javax.persistence.MappedSuperclass;
-
-@MappedSuperclass
 public abstract class HotelEntity {
-    private Long id;
+    protected String id;
 
-    // Геттеры и сеттеры для id
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
+
+    public abstract void display();
 }

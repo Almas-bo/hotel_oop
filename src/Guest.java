@@ -32,7 +32,7 @@ class Guest extends HotelEntity {
 
     @Override
     public String getId() {
-        return id;
+        return super.getId();
     }
 
     @Override

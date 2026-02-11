@@ -1,39 +1,45 @@
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.Date;
 
-@Entity
 class Booking extends HotelEntity {
-    @Id
-    private Long bookingId;  // Уникальный идентификатор бронирования
-    private Long guestId;  // Идентификатор гостя
-    private Long roomId;  // Идентификатор комнаты
-    private Date checkInDate;  // Дата заезда
-    private Date checkOutDate;  // Дата выезда
-    private double totalPrice;  // Общая цена за бронирование
+    private String bookingId;
+    private String guestId;
+    private String roomId;
+    private Date checkInDate;
+    private Date checkOutDate;
+    private double totalPrice;
 
-    // Геттеры и сеттеры
-    public Long getBookingId() {
+    public Booking(String bookingId, String guestId, String roomId, Date checkInDate, Date checkOutDate, double totalPrice) {
+        this.bookingId = bookingId;
+        this.id = bookingId;
+        this.guestId = guestId;
+        this.roomId = roomId;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.totalPrice = totalPrice;
+    }
+
+    public String getBookingId() {
         return bookingId;
     }
 
-    public void setBookingId(Long bookingId) {
+    public void setBookingId(String bookingId) {
         this.bookingId = bookingId;
+        this.id = bookingId;
     }
 
-    public Long getGuestId() {
+    public String getGuestId() {
         return guestId;
     }
 
-    public void setGuestId(Long guestId) {
+    public void setGuestId(String guestId) {
         this.guestId = guestId;
     }
 
-    public Long getRoomId() {
+    public String getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(Long roomId) {
+    public void setRoomId(String roomId) {
         this.roomId = roomId;
     }
 
@@ -59,5 +65,11 @@ class Booking extends HotelEntity {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Бронирование: " + bookingId + " | Гость: " + guestId +
+                " | Комната: " + roomId + " | Цена: " + totalPrice);
     }
 }
