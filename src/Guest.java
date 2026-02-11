@@ -45,16 +45,12 @@ class Guest extends HotelEntity {
         if (this == o) return true;
         if (o == null || !(o instanceof Guest)) return false;
         Guest guest = (Guest) o;
-        return email.equals(guest.email);
+        return email != null && email.equals(guest.email);
     }
 
     @Override
     public int hashCode() {
-        int result = 0;
-        for (char c : email.toCharArray()) {
-            result = result * 31 + c;
-        }
-        return result;
+        return email != null ? email.hashCode() : 0;
     }
 
     @Override
