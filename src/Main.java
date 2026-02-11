@@ -70,9 +70,10 @@ class Main {
                System.out.println("you are already registered!");
             }
             else if(answer == false){
+               scanner.nextLine();
+
                System.out.println("enter your name: ");
                String name = scanner.nextLine();
-               scanner.nextLine();
 
                System.out.println("enter your guest points: ");
                int points = scanner.nextInt();

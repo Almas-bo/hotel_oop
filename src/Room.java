@@ -1,63 +1,44 @@
-class Room extends HotelEntity {
-    private int number;
-    private String type;
-    private boolean occupied;
-    private double price;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-    public Room(int number, String type, boolean occupied, double price) {
-        this.number = number;
-        this.type = type;
-        this.occupied = occupied;
-        this.price = price;
-        this.id = "ROOM_" + number;
+@Entity
+public class Room extends HotelEntity {  // Наследуем от HotelEntity
+    @Id
+    private Long roomId;  // Уникальный идентификатор комнаты
+    private String roomType;  // Тип комнаты (например, одноместная, двухместная)
+    private double pricePerNight;  // Цена за ночь
+    private String status;  // Статус комнаты: свободна или занята
+
+    // Геттеры и сеттеры для всех полей
+    public Long getRoomId() {
+        return roomId;
     }
 
-    public int getNumber() {
-        return number;
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
     }
 
-    public String getType() {
-        return type;
+    public String getRoomType() {
+        return roomType;
     }
 
-    public boolean isOccupied() {
-        return occupied;
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
     }
 
-    public double getPrice() {
-        return price;
+    public double getPricePerNight() {
+        return pricePerNight;
     }
 
-    public void setOccupied(boolean occupied) {
-        this.occupied = occupied;
+    public void setPricePerNight(double pricePerNight) {
+        this.pricePerNight = pricePerNight;
     }
 
-    @Override
-    public String getId() {
-        return id;
+    public String getStatus() {
+        return status;
     }
 
-    @Override
-    public String toString() {
-        return "Room #" + number + " (" + type + ") - $" + price;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || !(o instanceof Room)) return false;
-        Room room = (Room) o;
-        return number == room.number;
-    }
-
-    @Override
-    public int hashCode() {
-        return number * 31;
-    }
-
-    @Override
-    public void display() {
-        System.out.println("Номер: " + number + " | Тип: " + type +
-                " | Статус: " + (occupied ? "ЗАНЯТА" : "СВОБОДНА") + " | Цена: $" + price);
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

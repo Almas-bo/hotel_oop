@@ -1,6 +1,15 @@
-abstract class HotelEntity {
-    protected String id;
+import javax.persistence.MappedSuperclass;
 
-    abstract void display();
-    abstract String getId();
+@MappedSuperclass
+public abstract class HotelEntity {
+    private Long id;
+
+    // Геттеры и сеттеры для id
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
